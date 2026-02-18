@@ -33,6 +33,15 @@ resource "google_secret_manager_secret_iam_member" "secret_access" {
   member    = "serviceAccount:${local.gcp_sa_email}"
 }
 
+# Permission pour puller des images (nécessaire pour Argo Workflow emissary)
+resource "google_project_iam_member" "artifact_registry_reader" {
+  count = var.image_gcp_project != null ? 1 : 0
+
+  project = var.image_gcp_project
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${local.gcp_sa_email}"
+}
+
 # Workload Identity binding (GCP SA ↔ K8s SA)
 resource "google_service_account_iam_member" "workload_identity" {
   service_account_id = local.gcp_sa_name
