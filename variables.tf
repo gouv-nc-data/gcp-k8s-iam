@@ -58,5 +58,5 @@ variable "service_account_email" {
 variable "image_gcp_project" {
   description = "ID du projet GCP contenant les images Docker (pour donner accès au SA du workload)"
   type        = string
-  default     = null
+  default     = "prj-dinum-data-templates-66aa"
 }
