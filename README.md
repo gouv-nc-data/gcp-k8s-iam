@@ -77,7 +77,7 @@ No modules.
 | <a name="input_display_name"></a> [display\_name](#input\_display\_name) | Description du Service Account GCP (optionnel) | `string` | `null` | no |
 | <a name="input_gcp_roles"></a> [gcp\_roles](#input\_gcp\_roles) | Liste des rôles IAM à attribuer au Service Account sur le projet | `list(string)` | `[]` | no |
 | <a name="input_gke_project_id"></a> [gke\_project\_id](#input\_gke\_project\_id) | ID du projet GCP hébergeant le cluster GKE (pour Workload Identity) | `string` | `"prj-dinum-gke-f8f8"` | no |
-| <a name="input_image_gcp_project"></a> [image\_gcp\_project](#input\_image\_gcp\_project) | ID du projet GCP contenant les images Docker (pour donner accès au SA du workload) | `string` | `null` | no |
+| <a name="input_image_gcp_project"></a> [image\_gcp\_project](#input\_image\_gcp\_project) | ID du projet GCP contenant les images Docker (pour donner accès au SA du workload) | `string` | `"prj-dinum-data-templates-66aa"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Nom du workload (utilisé pour nommer les SA) | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace Kubernetes | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | ID du projet GCP où créer le Service Account | `string` | n/a | yes |
