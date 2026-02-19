@@ -46,11 +46,11 @@ resource "google_project_iam_member" "artifact_registry_reader" {
 resource "google_service_account_iam_member" "workload_identity" {
   service_account_id = local.gcp_sa_name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "serviceAccount:${var.gke_project_id}.svc.id.goog[${var.namespace}/${kubernetes_service_account.sa.metadata[0].name}]"
+  member             = "serviceAccount:${var.gke_project_id}.svc.id.goog[${var.namespace}/${kubernetes_service_account_v1.sa.metadata[0].name}]"
 }
 
 # Service Account Kubernetes
-resource "kubernetes_service_account" "sa" {
+resource "kubernetes_service_account_v1" "sa" {
   metadata {
     name      = local.sa_account_id
     namespace = var.namespace
