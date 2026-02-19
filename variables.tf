@@ -60,3 +60,25 @@ variable "image_gcp_project" {
   type        = string
   default     = "prj-dinum-data-templates-66aa"
 }
+
+variable "k8s_external_roles" {
+  description = "Rôles Kubernetes existants (Role ou ClusterRole) à binder"
+  type = list(object({
+    kind = string
+    name = string
+  }))
+  default = []
+}
+
+variable "k8s_custom_roles" {
+  description = "Rôles Kubernetes à créer et binder"
+  type = list(object({
+    name = string
+    rules = list(object({
+      api_groups = list(string)
+      resources  = list(string)
+      verbs      = list(string)
+    }))
+  }))
+  default = []
+}

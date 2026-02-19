@@ -59,3 +59,47 @@ resource "kubernetes_service_account_v1" "sa" {
     }
   }
 }
+
+# Création des rôles personnalisés
+resource "kubernetes_role_v1" "custom" {
+  for_each = { for r in var.k8s_custom_roles : r.name => r }
+
+  metadata {
+    name      = "${local.sa_account_id}-${each.key}"
+    namespace = var.namespace
+  }
+
+  dynamic "rule" {
+    for_each = each.value.rules
+    content {
+      api_groups = rule.value.api_groups
+      resources  = rule.value.resources
+      verbs      = rule.value.verbs
+    }
+  }
+}
+
+# Bindings (Externes + Custom)
+resource "kubernetes_role_binding_v1" "k8s_roles" {
+  for_each = merge(
+    { for r in var.k8s_external_roles : "${r.kind}-${r.name}" => r },
+    { for r in var.k8s_custom_roles : "role-${r.name}" => { kind = "Role", name = kubernetes_role_v1.custom[r.name].metadata[0].name } }
+  )
+
+  metadata {
+    name      = "${local.sa_account_id}-${lower(each.value.kind)}-${each.value.name}"
+    namespace = var.namespace
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = each.value.kind
+    name      = each.value.name
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account_v1.sa.metadata[0].name
+    namespace = var.namespace
+  }
+}
