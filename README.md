@@ -67,6 +67,8 @@ No modules.
 | [google_secret_manager_secret_iam_member.secret_access](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_service_account.sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_service_account_iam_member.workload_identity](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_member) | resource |
+| [kubernetes_role_binding_v1.k8s_roles](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_binding_v1) | resource |
+| [kubernetes_role_v1.custom](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_v1) | resource |
 | [kubernetes_service_account_v1.sa](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account_v1) | resource |
 
 ## Inputs
@@ -78,6 +80,8 @@ No modules.
 | <a name="input_gcp_roles"></a> [gcp\_roles](#input\_gcp\_roles) | Liste des rôles IAM à attribuer au Service Account sur le projet | `list(string)` | `[]` | no |
 | <a name="input_gke_project_id"></a> [gke\_project\_id](#input\_gke\_project\_id) | ID du projet GCP hébergeant le cluster GKE (pour Workload Identity) | `string` | `"prj-dinum-gke-f8f8"` | no |
 | <a name="input_image_gcp_project"></a> [image\_gcp\_project](#input\_image\_gcp\_project) | ID du projet GCP contenant les images Docker (pour donner accès au SA du workload) | `string` | `"prj-dinum-data-templates-66aa"` | no |
+| <a name="input_k8s_custom_roles"></a> [k8s\_custom\_roles](#input\_k8s\_custom\_roles) | Rôles Kubernetes à créer et binder | <pre>list(object({<br/>    name = string<br/>    rules = list(object({<br/>      api_groups = list(string)<br/>      resources  = list(string)<br/>      verbs      = list(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
+| <a name="input_k8s_external_roles"></a> [k8s\_external\_roles](#input\_k8s\_external\_roles) | Rôles Kubernetes existants (Role ou ClusterRole) à binder | <pre>list(object({<br/>    kind = string<br/>    name = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | Nom du workload (utilisé pour nommer les SA) | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace Kubernetes | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | ID du projet GCP où créer le Service Account | `string` | n/a | yes |
